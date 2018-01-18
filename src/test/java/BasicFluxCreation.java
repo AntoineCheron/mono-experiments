@@ -2,6 +2,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 import org.junit.Test;
+
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -112,6 +113,21 @@ public class BasicFluxCreation {
     try { Thread.sleep(3000); }
     catch (InterruptedException e) { e.printStackTrace(); }
     System.out.println("End of test.");
+  }
+
+  @Test
+  public void fluxRunSequentially() {
+    Flux.range(1, 3).
+      flatMap(n -> {
+        System.out.println("In flatMap n=" + n + " --- Thread is : " + Thread.currentThread().getName());
+        try {
+          Thread.sleep(100);
+          System.out.println("After Thread.sleep n=" + n);
+          return Mono.just(n);
+        } catch (InterruptedException e) { return Mono.error(e); }
+      }).
+      map(n -> { System.out.println("In map n=" + n); return n; }).
+      subscribe(System.out::println);
   }
 
 }

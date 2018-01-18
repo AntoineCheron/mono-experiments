@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
@@ -19,8 +20,8 @@ public class MonoCreation {
 
   @Test
   public void monoDotCreate() {
-    Mono<String> mono = Mono.create(monoSink -> {
-      monoSink.success();
+    Mono<String> mono = Mono.create(callback -> {
+      callback.success("Hello World");
     });
   }
 
