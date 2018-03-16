@@ -71,4 +71,12 @@ public class TestUtils {
     long getDuration() { return this.duration; }
   }
 
+  public static void sleep(int ms) {
+    try {
+      Thread.sleep(ms);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
 }
